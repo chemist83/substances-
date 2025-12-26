@@ -278,10 +278,10 @@
     const kSize = 0.65;
     const iSize = 0.85; // Iodide is significantly larger than Potassium
     const kiAtoms = [
-        {c:0xffff00, s:kSize, x:-0.65, y:0.65, z:0.65}, {c:0x4b0082, s:iSize, x:0.65, y:0.65, z:0.65}, 
-        {c:0x4b0082, s:iSize, x:-0.65, y:-0.65, z:0.65}, {c:0xffff00, s:kSize, x:0.65, y:-0.65, z:0.65},
-        {c:0x4b0082, s:iSize, x:-0.65, y:0.65, z:-0.65}, {c:0xffff00, s:kSize, x:0.65, y:0.65, z:-0.65},
-        {c:0xffff00, s:kSize, x:-0.65, y:-0.65, z:-0.65},{c:0x4b0082, s:iSize, x:0.65, y:-0.65, z:-0.65}
+        {c:0xffff00, s:0.65, x:-0.65, y:0.65, z:0.65}, {c:0x4b0082, s:0.65, x:0.65, y:0.65, z:0.65}, 
+        {c:0x4b0082, s:0.65, x:-0.65, y:-0.65, z:0.65}, {c:0xffff00, s:0.65, x:0.65, y:-0.65, z:0.65},
+        {c:0x4b0082, s:0.65, x:-0.65, y:0.65, z:-0.65}, {c:0xffff00, s:0.65, x:0.65, y:0.65, z:-0.65},
+        {c:0xffff00, s:0.65, x:-0.65, y:-0.65, z:-0.65},{c:0x4b0082, s:0.65, x:0.65, y:-0.65, z:-0.65}
     ];
     // isIonic = true (Removes the cylinders)
     renderMolecule('ki-box', kiAtoms, [], true, 5);
