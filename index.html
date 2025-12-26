@@ -134,6 +134,14 @@
         </div>
         <div id="naoh-box" class="canvas-3d"></div>
             </div>
+      <div class="molecule-entry">
+        <div class="molecule-title">Sulfuric Acid (H2SO4)</div>
+        <div class="knowledge-box">
+            A highly corrosive strong mineral acid. Known historically as "oil of vitriol."
+        </div>
+        <div id="h2so4-box" class="canvas-3d"></div>
+      </div>
+    
     <script>
     // --- CORE 3D ENGINE ---
     function renderMolecule(id, atoms, bonds, isIonic = false, zoom = 5) {
@@ -152,6 +160,7 @@
         light.position.set(10, 10, 10);
         scene.add(light);
 
+        // Draw Atoms
         atoms.forEach(a => {
             const sphere = new THREE.Mesh(
                 new THREE.SphereGeometry(a.s, 32, 32),
@@ -161,7 +170,7 @@
             scene.add(sphere);
         });
 
-        // Create Bonds (Skipped for strictly Ionic parts)
+        // Draw Bonds
         bonds.forEach(b => {
             const start = new THREE.Vector3(atoms[b.f].x, atoms[b.f].y, atoms[b.f].z);
             const end = new THREE.Vector3(atoms[b.t].x, atoms[b.t].y, atoms[b.t].z);
@@ -180,7 +189,7 @@
         anim();
     }
 
-    // --- MOLECULE DATA ---
+    // --- SUBSTANCE LIST ---
 
     // 1. HCl
     renderMolecule('hcl-box', [{c:0xff0000, s:0.7, x:-0.6, y:0, z:0}, {c:0x00ff00, s:0.4, x:0.6, y:0, z:0}], [{f:0, t:1}]);
@@ -192,7 +201,7 @@
     const gA = [{c:0x333333,s:0.5,x:1,y:0,z:0},{c:0x333333,s:0.5,x:0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-1,y:0,z:0},{c:0x333333,s:0.5,x:-0.5,y:-0.8,z:-0.5},{c:0x333333,s:0.5,x:0.5,y:-0.8,z:-0.5},{c:0xff0000,s:0.4,x:1.8,y:0,z:0},{c:0xff0000,s:0.4,x:1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1.8,y:0,z:0},{c:0xff0000,s:0.4,x:-1,y:-1.5,z:-1},{c:0xff0000,s:0.4,x:1,y:-1.5,z:-1},{c:0xeeeeee,s:0.2,x:1,y:0.5,z:-0.5},{c:0xeeeeee,s:0.2,x:2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-1,y:0.5,z:0.5},{c:0xeeeeee,s:0.2,x:-2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:-0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:-2,z:-1},{c:0xeeeeee,s:0.2,x:0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:1.5,y:-2,z:-1}];
     renderMolecule('glucose-box', gA, [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:3,t:4},{f:4,t:5},{f:5,t:0}], false, 8);
 
-    // 4. NaCl (Ionic - Equalized)
+    // 4. NaCl
     const nA = [{c:0x8A2BE2,s:0.65,x:-0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:-0.6,z:0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:-0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:-0.6,y:-0.6,z:-0.6},{c:0x00ff00,s:0.65,x:0.6,y:-0.6,z:-0.6}];
     renderMolecule('nacl-box', nA, [], true, 5);
 
@@ -200,17 +209,27 @@
     const eA = [{c:0x333333,s:0.5,x:-0.7,y:0,z:0},{c:0x333333,s:0.5,x:0.7,y:0,z:0},{c:0xff0000,s:0.45,x:1.5,y:0.7,z:0},{c:0xeeeeee,s:0.25,x:2.1,y:0.3,z:0},{c:0xeeeeee,s:0.25,x:-1.2,y:0.7,z:0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:-0.7,z:-0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:0,z:-1},{c:0xeeeeee,s:0.25,x:0.7,y:-0.8,z:0.5},{c:0xeeeeee,s:0.25,x:0.7,y:0.8,z:-0.5}];
     renderMolecule('ethanol-box', eA, [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:0,t:4},{f:0,t:5},{f:0,t:6},{f:1,t:7},{f:1,t:8}]);
 
-    // 6. Sodium Hydroxide (NaOH)
-    // Sodium is 紫色 (Purple), Oxygen is 红色 (Red), Hydrogen is 白色 (White)
-    const naohAtoms = [
-        {c:0x8A2BE2, s:0.65, x:-0.6, y:0, z:0}, // Na+
-        {c:0xff0000, s:0.65, x:0.6, y:0, z:0},  // O
-        {c:0xeeeeee, s:0.35, x:1.3, y:0, z:0}   // H
+    // 6. NaOH
+    renderMolecule('naoh-box', [{c:0x8A2BE2, s:0.65, x:-0.6, y:0, z:0}, {c:0xff0000, s:0.65, x:0.6, y:0, z:0}, {c:0xeeeeee, s:0.35, x:1.3, y:0, z:0}], [{f:1, t:2}], false, 5);
+
+    // 7. Sulfuric Acid (H2SO4)
+    // Sulfur is Yellow (0xffff00), Oxygen is Red, Hydrogen is White
+    const h2so4Atoms = [
+        {c:0xffff00, s:0.65, x:0, y:0, z:0},    // Sulfur (0)
+        {c:0xff0000, s:0.5, x:0, y:1.2, z:0},   // Oxygen top (1)
+        {c:0xff0000, s:0.5, x:0, y:-1.2, z:0},  // Oxygen bottom (2)
+        {c:0xff0000, s:0.5, x:1.1, y:0, z:0.5}, // Oxygen side A (3)
+        {c:0xff0000, s:0.5, x:-1.1, y:0, z:-0.5},// Oxygen side B (4)
+        {c:0xeeeeee, s:0.25, x:1.6, y:0.6, z:0.5}, // H (on O3)
+        {c:0xeeeeee, s:0.25, x:-1.6, y:-0.6, z:-0.5}// H (on O4)
     ];
-    // We only bond Oxygen to Hydrogen (covalent). Na is kept next to it (ionic).
-    renderMolecule('naoh-box', naohAtoms, [{f:1, t:2}], false, 5);
+    const h2so4Bonds = [
+        {f:0, t:1}, {f:0, t:2}, {f:0, t:3}, {f:0, t:4}, // S to all O's
+        {f:3, t:5}, {f:4, t:6} // O to H's
+    ];
+    renderMolecule('h2so4-box', h2so4Atoms, h2so4Bonds, false, 7);
 
     function searchMolecule() { alert("Search: " + document.getElementById('mol-search').value); }
-    </script>
+        </script>
 </body>
 </html>
