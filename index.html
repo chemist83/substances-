@@ -155,6 +155,13 @@
         </div>
         <div id="hno3-box" class="canvas-3d"></div>
     </div>
+    <div class="molecule-entry">
+        <div class="molecule-title">Potassium Iodide (KI)</div>
+        <div class="knowledge-box">
+            An ionic compound used in medicine and photography. It forms a cubic crystal lattice similar to table salt.
+        </div>
+        <div id="ki-box" class="canvas-3d"></div>
+    </div>
     <script>
     // --- CORE 3D ENGINE ---
     function renderMolecule(id, atoms, bonds, isIonic = false, zoom = 5) {
@@ -265,7 +272,19 @@
         {f:3, t:4} // O to H
     ];
     renderMolecule('hno3-box', hno3Atoms, hno3Bonds, false, 6);
-        
+
+        // 10. Potassium Iodide (KI)
+    // Potassium is Violet (0xc381fd), Iodide is Dark Purple/Gray (0x4b0082)
+    const kSize = 0.65;
+    const iSize = 0.85; // Iodide is significantly larger than Potassium
+    const kiAtoms = [
+        {c:0xc381fd, s:kSize, x:-0.65, y:0.65, z:0.65}, {c:0x4b0082, s:iSize, x:0.65, y:0.65, z:0.65}, 
+        {c:0x4b0082, s:iSize, x:-0.65, y:-0.65, z:0.65}, {c:0xc381fd, s:kSize, x:0.65, y:-0.65, z:0.65},
+        {c:0x4b0082, s:iSize, x:-0.65, y:0.65, z:-0.65}, {c:0xc381fd, s:kSize, x:0.65, y:0.65, z:-0.65},
+        {c:0xc381fd, s:kSize, x:-0.65, y:-0.65, z:-0.65},{c:0x4b0082, s:iSize, x:0.65, y:-0.65, z:-0.65}
+    ];
+    // isIonic = true (Removes the cylinders)
+    renderMolecule('ki-box', kiAtoms, [], true, 5);
     function searchMolecule() { alert("Search: " + document.getElementById('mol-search').value); }
         </script>
 </body>
