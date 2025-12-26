@@ -164,80 +164,109 @@
     </div>
 
         <script>
-    // --- CORE 3D ENGINE ---
-    function renderMolecule(id, atoms, bonds, isIonic = false, zoom = 5) {
-        const el = document.getElementById(id);
-        if(!el) return;
+    // --- DATA ---
+    const molData = [
+        {id: 'hcl-box', a: [{c:0xff0000, s:0.7, x:-0.6, y:0, z:0}, {c:0x00ff00, s:0.4, x:0.6, y:0, z:0}], b: [{f:0, t:1}], i: false, z: 5},
+        {id: 'h2o-box', a: [{c:0x00ff00, s:0.6, x:0, y:0.3, z:0}, {c:0x0000ff, s:0.4, x:-0.6, y:-0.4, z:0}, {c:0x0000ff, s:0.4, x:0.6, y:-0.4, z:0}], b: [{f:0, t:1}, {f:0, t:2}], i: false, z: 5},
+        {id: 'glucose-box', a: [{c:0x333333,s:0.5,x:1,y:0,z:0},{c:0x333333,s:0.5,x:0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-1,y:0,z:0},{c:0x333333,s:0.5,x:-0.5,y:-0.8,z:-0.5},{c:0x333333,s:0.5,x:0.5,y:-0.8,z:-0.5},{c:0xff0000,s:0.4,x:1.8,y:0,z:0},{c:0xff0000,s:0.4,x:1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1.8,y:0,z:0},{c:0xff0000,s:0.4,x:-1,y:-1.5,z:-1},{c:0xff0000,s:0.4,x:1,y:-1.5,z:-1},{c:0xeeeeee,s:0.2,x:1,y:0.5,z:-0.5},{c:0xeeeeee,s:0.2,x:2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-1,y:0.5,z:0.5},{c:0xeeeeee,s:0.2,x:-2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:-0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:-2,z:-1},{c:0xeeeeee,s:0.2,x:0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:1.5,y:-2,z:-1}], b: [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:3,t:4},{f:4,t:5},{f:5,t:0}], i: false, z: 8},
+        {id: 'nacl-box', a: [{c:0x8A2BE2,s:0.65,x:-0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:-0.6,z:0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:-0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:-0.6,y:-0.6,z:-0.6},{c:0x00ff00,s:0.65,x:0.6,y:-0.6,z:0.6}], b: [], i: true, z: 5},
+        {id: 'ethanol-box', a: [{c:0x333333,s:0.5,x:-0.7,y:0,z:0},{c:0x333333,s:0.5,x:0.7,y:0,z:0},{c:0xff0000,s:0.45,x:1.5,y:0.7,z:0},{c:0xeeeeee,s:0.25,x:2.1,y:0.3,z:0},{c:0xeeeeee,s:0.25,x:-1.2,y:0.7,z:0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:-0.7,z:-0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:0,z:-1},{c:0xeeeeee,s:0.25,x:0.7,y:-0.8,z:0.5},{c:0xeeeeee,s:0.25,x:0.7,y:0.8,z:-0.5}], b: [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:0,t:4},{f:0,t:5},{f:0,t:6},{f:1,t:7},{f:1,t:8}], i: false, z: 5},
+        {id: 'naoh-box', a: [{c:0x8A2BE2, s:0.65, x:-0.6, y:0, z:0}, {c:0xff0000, s:0.65, x:0.6, y:0, z:0}, {c:0xeeeeee, s:0.35, x:1.3, y:0, z:0}], b: [{f:1, t:2}], i: false, z: 5},
+        {id: 'h2so4-box', a: [{c:0xffff00,s:0.65,x:0,y:0,z:0},{c:0xff0000,s:0.5,x:0,y:1.2,z:0},{c:0xff0000,s:0.5,x:0,y:-1.2,z:0},{c:0xff0000,s:0.5,x:1.1,y:0,z:0.5},{c:0xff0000,s:0.5,x:-1.1,y:0,z:-0.5},{c:0xeeeeee,s:0.25,x:1.6,y:0.6,z:0.5},{c:0xeeeeee,s:0.25,x:-1.6,y:-0.6,z:-0.5}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:0,t:4},{f:3,t:5},{f:4,t:6}], i: false, z: 7},
+        {id: 'koh-box', a: [{c:0xc381fd, s:0.7, x:-0.7, y:0, z:0}, {c:0xff0000, s:0.65, x:0.7, y:0, z:0}, {c:0xeeeeee, s:0.35, x:1.4, y:0, z:0}], b: [{f:1, t:2}], i: false, z: 5},
+        {id: 'hno3-box', a: [{c:0x0000ff,s:0.55,x:0,y:0,z:0},{c:0xff0000,s:0.5,x:0,y:1.2,z:0},{c:0xff0000,s:0.5,x:1.1,y:-0.6,z:0},{c:0xff0000,s:0.5,x:-1.1,y:-0.6,z:0},{c:0xeeeeee,s:0.25,x:-1.8,y:-0.2,z:0}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:3,t:4}], i: false, z: 6},
+        {id: 'ki-box', a: [{c:0xffff00,s:0.65,x:-0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:-0.65,z:0.65},{c:0xffff00,s:0.65,x:0.65,y:-0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:-0.65,y:-0.65,z:-0.65},{c:0x4b0082,s:0.65,x:0.65,y:-0.65,z:-0.65}], b: [], i: true, z: 5}
+    ];
 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(50, el.clientWidth/el.clientHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-        
-        renderer.setSize(el.clientWidth, el.clientHeight);
-        renderer.setClearColor(0x808080);
-        el.appendChild(renderer.domElement);
+    let renderer, camera, scene;
+    const scenes = [];
 
-        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
-        const light = new THREE.PointLight(0xffffff, 1);
-        light.position.set(10, 10, 10);
-        scene.add(light);
+    function init() {
+        const canvas = document.createElement('canvas');
+        renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
 
-        atoms.forEach(a => {
-            const sphere = new THREE.Mesh(
-                new THREE.SphereGeometry(a.s, 32, 32),
-                new THREE.MeshPhongMaterial({ color: a.c })
-            );
-            sphere.position.set(a.x, a.y, a.z);
-            scene.add(sphere);
+        molData.forEach(data => {
+            const el = document.getElementById(data.id);
+            if(!el) return;
+
+            const scene = new THREE.Scene();
+            scene.userData.element = el;
+            
+            const camera = new THREE.PerspectiveCamera(50, 1, 0.1, 100);
+            camera.position.z = data.z;
+            scene.userData.camera = camera;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+            const light = new THREE.PointLight(0xffffff, 1);
+            light.position.set(10, 10, 10);
+            scene.add(light);
+
+            const group = new THREE.Group();
+            data.a.forEach(a => {
+                const mesh = new THREE.Mesh(new THREE.SphereGeometry(a.s, 24, 24), new THREE.MeshPhongMaterial({ color: a.c }));
+                mesh.position.set(a.x, a.y, a.z);
+                group.add(mesh);
+            });
+
+            if (!data.i) {
+                data.b.forEach(b => {
+                    const start = new THREE.Vector3(data.a[b.f].x, data.a[b.f].y, data.a[b.f].z);
+                    const end = new THREE.Vector3(data.a[b.t].x, data.a[b.t].y, data.a[b.t].z);
+                    const dist = start.distanceTo(end);
+                    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, dist, 12), new THREE.MeshPhongMaterial({ color: 0xffffff }));
+                    cyl.position.copy(start.clone().lerp(end, 0.5));
+                    cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.clone().sub(start).normalize());
+                    group.add(cyl);
+                });
+            }
+            scene.add(group);
+            scene.userData.group = group;
+            scenes.push(scene);
         });
 
-        if (!isIonic) {
-            bonds.forEach(b => {
-                const start = new THREE.Vector3(atoms[b.f].x, atoms[b.f].y, atoms[b.f].z);
-                const end = new THREE.Vector3(atoms[b.t].x, atoms[b.t].y, atoms[b.t].z);
-                const dist = start.distanceTo(end);
-                const cyl = new THREE.Mesh(
-                    new THREE.CylinderGeometry(0.08, 0.08, dist, 16),
-                    new THREE.MeshPhongMaterial({ color: 0xffffff })
-                );
-                cyl.position.copy(start.clone().lerp(end, 0.5));
-                cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.clone().sub(start).normalize());
-                scene.add(cyl);
-            });
-        }
+        document.body.appendChild(renderer.domElement);
+        renderer.domElement.style.position = 'fixed';
+        renderer.domElement.style.top = 0;
+        renderer.domElement.style.left = 0;
+        renderer.domElement.style.width = '100%';
+        renderer.domElement.style.height = '100%';
+        renderer.domElement.style.pointerEvents = 'none';
+        renderer.domElement.style.zIndex = -1;
 
-        camera.position.z = zoom;
-        function anim() { 
-            requestAnimationFrame(anim); 
-            scene.rotation.y += 0.01; 
-            renderer.render(scene, camera); 
-        }
-        anim();
+        animate();
     }
 
-    // --- DATA AND QUEUE SYSTEM ---
-    window.onload = function() {
-        const molData = [
-            {id: 'hcl-box', a: [{c:0xff0000, s:0.7, x:-0.6, y:0, z:0}, {c:0x00ff00, s:0.4, x:0.6, y:0, z:0}], b: [{f:0, t:1}], i: false, z: 5},
-            {id: 'h2o-box', a: [{c:0x00ff00, s:0.6, x:0, y:0.3, z:0}, {c:0x0000ff, s:0.4, x:-0.6, y:-0.4, z:0}, {c:0x0000ff, s:0.4, x:0.6, y:-0.4, z:0}], b: [{f:0, t:1}, {f:0, t:2}], i: false, z: 5},
-            {id: 'glucose-box', a: [{c:0x333333,s:0.5,x:1,y:0,z:0},{c:0x333333,s:0.5,x:0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-0.5,y:0.8,z:0.5},{c:0x333333,s:0.5,x:-1,y:0,z:0},{c:0x333333,s:0.5,x:-0.5,y:-0.8,z:-0.5},{c:0x333333,s:0.5,x:0.5,y:-0.8,z:-0.5},{c:0xff0000,s:0.4,x:1.8,y:0,z:0},{c:0xff0000,s:0.4,x:1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1,y:1.5,z:1},{c:0xff0000,s:0.4,x:-1.8,y:0,z:0},{c:0xff0000,s:0.4,x:-1,y:-1.5,z:-1},{c:0xff0000,s:0.4,x:1,y:-1.5,z:-1},{c:0xeeeeee,s:0.2,x:1,y:0.5,z:-0.5},{c:0xeeeeee,s:0.2,x:2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-0.5,y:1.2,z:-0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:2,z:1},{c:0xeeeeee,s:0.2,x:-1,y:0.5,z:0.5},{c:0xeeeeee,s:0.2,x:-2.5,y:0.5,z:0},{c:0xeeeeee,s:0.2,x:-0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:-1.5,y:-2,z:-1},{c:0xeeeeee,s:0.2,x:0.5,y:-1.2,z:0.2},{c:0xeeeeee,s:0.2,x:1.5,y:-2,z:-1}], b: [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:3,t:4},{f:4,t:5},{f:5,t:0}], i: false, z: 8},
-            {id: 'nacl-box', a: [{c:0x8A2BE2,s:0.65,x:-0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:0.6,y:0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:-0.6,z:0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:-0.6,z:0.6},{c:0x00ff00,s:0.65,x:-0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:0.6,y:0.6,z:-0.6},{c:0x8A2BE2,s:0.65,x:-0.6,y:-0.6,z:-0.6},{c:0x00ff00,s:0.65,x:0.6,y:-0.6,z:-0.6}], b: [], i: true, z: 5},
-            {id: 'ethanol-box', a: [{c:0x333333,s:0.5,x:-0.7,y:0,z:0},{c:0x333333,s:0.5,x:0.7,y:0,z:0},{c:0xff0000,s:0.45,x:1.5,y:0.7,z:0},{c:0xeeeeee,s:0.25,x:2.1,y:0.3,z:0},{c:0xeeeeee,s:0.25,x:-1.2,y:0.7,z:0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:-0.7,z:-0.5},{c:0xeeeeee,s:0.25,x:-1.2,y:0,z:-1},{c:0xeeeeee,s:0.25,x:0.7,y:-0.8,z:0.5},{c:0xeeeeee,s:0.25,x:0.7,y:0.8,z:-0.5}], b: [{f:0,t:1},{f:1,t:2},{f:2,t:3},{f:0,t:4},{f:0,t:5},{f:0,t:6},{f:1,t:7},{f:1,t:8}], i: false, z: 5},
-            {id: 'naoh-box', a: [{c:0x8A2BE2, s:0.65, x:-0.6, y:0, z:0}, {c:0xff0000, s:0.65, x:0.6, y:0, z:0}, {c:0xeeeeee, s:0.35, x:1.3, y:0, z:0}], b: [{f:1, t:2}], i: false, z: 5},
-            {id: 'h2so4-box', a: [{c:0xffff00,s:0.65,x:0,y:0,z:0},{c:0xff0000,s:0.5,x:0,y:1.2,z:0},{c:0xff0000,s:0.5,x:0,y:-1.2,z:0},{c:0xff0000,s:0.5,x:1.1,y:0,z:0.5},{c:0xff0000,s:0.5,x:-1.1,y:0,z:-0.5},{c:0xeeeeee,s:0.25,x:1.6,y:0.6,z:0.5},{c:0xeeeeee,s:0.25,x:-1.6,y:-0.6,z:-0.5}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:0,t:4},{f:3,t:5},{f:4,t:6}], i: false, z: 7},
-            {id: 'koh-box', a: [{c:0xc381fd, s:0.7, x:-0.7, y:0, z:0}, {c:0xff0000, s:0.65, x:0.7, y:0, z:0}, {c:0xeeeeee, s:0.35, x:1.4, y:0, z:0}], b: [{f:1, t:2}], i: false, z: 5},
-            {id: 'hno3-box', a: [{c:0x0000ff,s:0.55,x:0,y:0,z:0},{c:0xff0000,s:0.5,x:0,y:1.2,z:0},{c:0xff0000,s:0.5,x:1.1,y:-0.6,z:0},{c:0xff0000,s:0.5,x:-1.1,y:-0.6,z:0},{c:0xeeeeee,s:0.25,x:-1.8,y:-0.2,z:0}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:3,t:4}], i: false, z: 6},
-            {id: 'ki-box', a: [{c:0xffff00,s:0.65,x:-0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:-0.65,z:0.65},{c:0xffff00,s:0.65,x:0.65,y:-0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:-0.65,y:-0.65,z:-0.65},{c:0x4b0082,s:0.65,x:0.65,y:-0.65,z:-0.65}], b: [], i: true, z: 5}
-        ];
+    function animate() {
+        requestAnimationFrame(animate);
+        renderer.setClearColor(0xffffff);
+        renderer.setScissorTest(false);
+        renderer.clear();
+        renderer.setClearColor(0x808080);
+        renderer.setScissorTest(true);
 
-        // Renders each molecule one by one with a small delay
-        molData.forEach((mol, index) => {
-            setTimeout(() => {
-                renderMolecule(mol.id, mol.a, mol.b, mol.i, mol.z);
-            }, index * 80); // 80ms gap between each molecule load
+        scenes.forEach(scene => {
+            scene.userData.group.rotation.y += 0.01;
+            const element = scene.userData.element;
+            const rect = element.getBoundingClientRect();
+
+            if (rect.bottom < 0 || rect.top > renderer.domElement.clientHeight ||
+                rect.right < 0 || rect.left > renderer.domElement.clientWidth) {
+                return; // Off screen
+            }
+
+            const width = rect.right - rect.left;
+            const height = rect.bottom - rect.top;
+            const left = rect.left;
+            const bottom = renderer.domElement.clientHeight - rect.bottom;
+
+            renderer.setViewport(left, bottom, width, height);
+            renderer.setScissor(left, bottom, width, height);
+            renderer.render(scene, scene.userData.camera);
         });
-    };
+    }
 
+    window.onload = init;
     function searchMolecule() { alert("Search: " + document.getElementById('mol-search').value); }
         </script>
  </body>
