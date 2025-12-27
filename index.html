@@ -282,7 +282,7 @@
                     const start = new THREE.Vector3(data.a[b.f].x, data.a[b.f].y, data.a[b.f].z);
                     const end = new THREE.Vector3(data.a[b.t].x, data.a[b.t].y, data.a[b.t].z);
                     const dist = start.distanceTo(end);
-                    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, dist, 12), new THREE.MeshPhongMaterial({ color: 0xffffff }));
+                    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, dist, 12), new THREE.MeshPhongMaterial({ color: 0x917c6a }));
                     cyl.position.copy(start.clone().lerp(end, 0.5));
                     cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), end.clone().sub(start).normalize());
                     group.add(cyl);
