@@ -169,7 +169,7 @@
     </div>
     <div class="molecule-entry">
         <div class="molecule-title">Potassium Iodide (KI)</div>
-        <div class="knowledge-box">
+      <div class="knowledge-box">
             An ionic compound used in medicine and photography. It forms a cubic crystal lattice similar to table salt.
         </div>
         <div id="ki-box" class="canvas-3d"></div>
@@ -188,6 +188,14 @@
     </div>
     <div id="caco3-box" class="canvas-3d"></div>
     </div>
+
+<div class="molecule-entry">
+    <div class="molecule-title">HYDROGEN PEROXIDE (H2O2)</div>
+    <div class="knowledge-box">
+        A pale blue, clear liquid, slightly more viscous than water. It is used as an oxidizer, bleaching agent, and antiseptic.
+    </div>
+    <div id="h2o2-box" class="canvas-3d"></div>
+</div>
         <script>
     // --- DATA ---
     const molData = [
@@ -217,7 +225,8 @@
         {id: 'hno3-box', a: [{c:0x0000ff,s:0.55,x:0,y:0,z:0},{c:0xff0000,s:0.5,x:0,y:1.2,z:0},{c:0xff0000,s:0.5,x:1.1,y:-0.6,z:0},{c:0xff0000,s:0.5,x:-1.1,y:-0.6,z:0},{c:0xeeeeee,s:0.25,x:-1.8,y:-0.2,z:0}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:3,t:4}], i: false, z: 6},
         {id: 'ki-box', a: [{c:0xffff00,s:0.65,x:-0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:0.65,y:0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:-0.65,z:0.65},{c:0xffff00,s:0.65,x:0.65,y:-0.65,z:0.65},{c:0x4b0082,s:0.65,x:-0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:0.65,y:0.65,z:-0.65},{c:0xffff00,s:0.65,x:-0.65,y:-0.65,z:-0.65},{c:0x4b0082,s:0.65,x:0.65,y:-0.65,z:-0.65}], b: [], i: true, z: 5},
         {id: 'vinegar-box', a: [{c:0x333333,s:0.5,x:0.5,y:0,z:0},{c:0x333333,s:0.5,x:-1,y:0,z:0},{c:0xff0000,s:0.45,x:1.1,y:1,z:0},{c:0xff0000,s:0.45,x:1.1,y:-1,z:0},{c:0xeeeeee,s:0.25,x:2,y:-1,z:0},{c:0xeeeeee,s:0.25,x:-1.4,y:1,z:0},{c:0xeeeeee,s:0.25,x:-1.4,y:-0.5,z:0.8},{c:0xeeeeee,s:0.25,x:-1.4,y:-0.5,z:-0.8}], b: [{f:0,t:1},{f:0,t:2},{f:0,t:3},{f:3,t:4},{f:1,t:5},{f:1,t:6},{f:1,t:7}], i: false, z: 6},
-        {id: 'caco3-box', a: [{c:0x808080,s:0.7,x:-0.8,y:0,z:0},{c:0x333333,s:0.5,x:0.8,y:0,z:0},{c:0xff0000,s:0.45,x:0.8,y:1,z:0},{c:0xff0000,s:0.45,x:1.7,y:-0.5,z:0},{c:0xff0000,s:0.45,x:-0.1,y:-0.5,z:0}], b: [{f:1,t:2},{f:1,t:3},{f:1,t:4}], i: false, z: 5}
+        {id: 'caco3-box', a: [{c:0x808080,s:0.7,x:-0.8,y:0,z:0},{c:0x333333,s:0.5,x:0.8,y:0,z:0},{c:0xff0000,s:0.45,x:0.8,y:1,z:0},{c:0xff0000,s:0.45,x:1.7,y:-0.5,z:0},{c:0xff0000,s:0.45,x:-0.1,y:-0.5,z:0}], b: [{f:1,t:2},{f:1,t:3},{f:1,t:4}], i: false, z: 5},
+        {id: 'h2o2-box', a: [{c:0xff0000,s:0.55,x:-0.5,y:0,z:0},{c:0xff0000,s:0.55,x:0.5,y:0,z:0},{c:0xeeeeee,s:0.3,x:-1,y:0.7,z:0.3},{c:0xeeeeee,s:0.3,x:1,y:-0.7,z:0.3}], b: [{f:0,t:1},{f:0,t:2},{f:1,t:3}], i: false, z: 5}                                                            
     ];
 
     let renderer, scene;
