@@ -327,17 +327,40 @@
     {f:5,t:16}, {f:16,t:17}, {f:16,t:18}  // Nitro 3 bonds
 ], i: false, z: 10},
         {id: 'caffeine-box', a: [
-    {c:0x0000ff,s:0.45,x:-0.8,y:-0.5,z:0}, {c:0x333333,s:0.5,x:0,y:0.5,z:0}, {c:0x0000ff,s:0.45,x:0.8,y:-0.5,z:0}, {c:0x333333,s:0.5,x:0,y:-1.2,z:0}, // Central Ring
-    {c:0x333333,s:0.5,x:-1.1,y:0.8,z:0}, {c:0x333333,s:0.5,x:1.1,y:0.8,z:0}, // Ring Carbons
-    {c:0xff0000,s:0.5,x:-1.8,y:1.5,z:0}, {c:0xff0000,s:0.5,x:1.8,y:1.5,z:0}, // Oxygens
-    {c:0x0000ff,s:0.45,x:-1.5,y:-1.2,z:0}, {c:0x0000ff,s:0.45,x:1.5,y:-1.2,z:0}, // Outer Nitrogens
-    {c:0x333333,s:0.5,x:-2.5,y:-0.5,z:0}, {c:0x333333,s:0.5,x:2.5,y:-0.5,z:0}, // Methyl Groups
-    {c:0x333333,s:0.5,x:0,y:1.8,z:0}, {c:0xeeeeee,s:0.25,x:0,y:2.4,z:0.5}, {c:0xeeeeee,s:0.25,x:0.5,y:2.4,z:-0.5}, {c:0xeeeeee,s:0.25,x:-0.5,y:2.4,z:-0.5} // Top Methyl
+    // CORE SKELETON (C and N)
+    {c:0x0000ff,s:0.45,x:-0.5,y:0.8,z:0},  // 0: N
+    {c:0x333333,s:0.5,x:0.5,y:1.5,z:0},    // 1: C
+    {c:0x0000ff,s:0.45,x:1.5,y:0.8,z:0},   // 2: N
+    {c:0x333333,s:0.5,x:1.5,y:-0.5,z:0},   // 3: C
+    {c:0x333333,s:0.5,x:0.5,y:-1.2,z:0},   // 4: C
+    {c:0x333333,s:0.5,x:-0.5,y:-0.5,z:0},  // 5: C
+    {c:0x0000ff,s:0.45,x:2.6,y:-1.0,z:0},  // 6: N
+    {c:0x333333,s:0.5,x:3.2,y:-0.1,z:0},   // 7: C
+    {c:0x0000ff,s:0.45,x:2.6,y:0.8,z:0},   // 8: N
+    {c:0xff0000,s:0.5,x:0.5,y:2.6,z:0},    // 9: O
+    {c:0xff0000,s:0.5,x:-1.5,y:-1.0,z:0},  // 10: O
+    // METHYL CARBONS
+    {c:0x333333,s:0.5,x:-1.6,y:1.6,z:0},   // 11: C (Methyl)
+    {c:0x333333,s:0.5,x:1.5,y:1.9,z:0},    // 12: C (Methyl)
+    {c:0x333333,s:0.5,x:3.2,y:-2.2,z:0},   // 13: C (Methyl)
+    // HYDROGENS (The 10 missing atoms)
+    {c:0xeeeeee,s:0.25,x:4.2,y:-0.1,z:0},  // 14: H (on C8)
+    {c:0xeeeeee,s:0.25,x:-1.6,y:2.3,z:0.6}, {c:0xeeeeee,s:0.25,x:-1.6,y:2.3,z:-0.6}, {c:0xeeeeee,s:0.25,x:-2.4,y:1.2,z:0}, // 15,16,17: H on C11
+    {c:0xeeeeee,s:0.25,x:2.2,y:2.3,z:0.6}, {c:0xeeeeee,s:0.25,x:2.2,y:2.3,z:-0.6}, {c:0xeeeeee,s:0.25,x:0.8,y:2.5,z:0}, // 18,19,20: H on C12
+    {c:0xeeeeee,s:0.25,x:3.2,y:-2.8,z:0.8}, {c:0xeeeeee,s:0.25,x:3.2,y:-2.8,z:-0.8}, {c:0xeeeeee,s:0.25,x:4.0,y:-1.8,z:0} // 21,22,23: H on C13
 ], b: [
-    {f:0,t:1},{f:1,t:2},{f:2,t:3},{f:3,t:0}, // Inner ring bonds
-    {f:1,t:4},{f:1,t:5},{f:4,t:6},{f:5,t:7}, // Oxygen bonds
-    {f:0,t:8},{f:2,t:9},{f:8,t:10},{f:9,t:11}, // Nitrogen/Methyl bonds
-    {f:1,t:12},{f:12,t:13},{f:12,t:14},{f:12,t:15} // Top branch
+    // Ring Bonds
+    {f:0,t:1},{f:1,t:2},{f:2,t:3},{f:3,t:4},{f:4,t:5},{f:5,t:0},
+    {f:3,t:6},{f:6,t:7},{f:7,t:8},{f:8,t:2},
+    // Double Bonds (Oxygens)
+    {f:1,t:9},{f:5,t:10},
+    // Methyl Group Connections
+    {f:0,t:11},{f:2,t:12},{f:6,t:13},
+    // Hydrogen Connections
+    {f:7,t:14}, // H to C8
+    {f:11,t:15},{f:11,t:16},{f:11,t:17}, // H to Methyl C11
+    {f:12,t:18},{f:12,t:19},{f:12,t:20}, // H to Methyl C12
+    {f:13,t:21},{f:13,t:22},{f:13,t:23}  // H to Methyl C13
 ], i: false, z: 12}
     ];
 
