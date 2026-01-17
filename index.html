@@ -366,6 +366,33 @@
     {f:12,t:18},{f:12,t:19},{f:12,t:20},
     {f:13,t:21},{f:13,t:22},{f:13,t:23}
 ], i: false, z: 12},
+        {
+    id: 'mustard-box',
+    a: [
+        {c:0xffff00, s:0.7, x:0, y:0, z:0},       // 0: Sulfur (S)
+        // Left Side
+        {c:0x333333, s:0.5, x:-1.2, y:0.5, z:0},  // 1: Carbon (C1)
+        {c:0x333333, s:0.5, x:-2.4, y:-0.2, z:0}, // 2: Carbon (C2)
+        {c:0x00ff00, s:0.65, x:-3.8, y:0.5, z:0}, // 3: Chlorine (Cl1)
+        // Right Side
+        {c:0x333333, s:0.5, x:1.2, y:0.5, z:0},   // 4: Carbon (C3)
+        {c:0x333333, s:0.5, x:2.4, y:-0.2, z:0},  // 5: Carbon (C4)
+        {c:0x00ff00, s:0.65, x:3.8, y:0.5, z:0},  // 6: Chlorine (Cl2)
+        // Hydrogens (Optional for detail)
+        {c:0xeeeeee, s:0.25, x:-1.2, y:1.2, z:0.5}, {c:0xeeeeee, s:0.25, x:-1.2, y:1.2, z:-0.5}, // On C1
+        {c:0xeeeeee, s:0.25, x:-2.4, y:-0.9, z:0.5}, {c:0xeeeeee, s:0.25, x:-2.4, y:-0.9, z:-0.5}, // On C2
+        {c:0xeeeeee, s:0.25, x:1.2, y:1.2, z:0.5}, {c:0xeeeeee, s:0.25, x:1.2, y:1.2, z:-0.5},   // On C3
+        {c:0xeeeeee, s:0.25, x:2.4, y:-0.9, z:0.5}, {c:0xeeeeee, s:0.25, x:2.4, y:-0.9, z:-0.5}   // On C4
+    ],
+    b: [
+        {f:0, t:1}, {f:1, t:2}, {f:2, t:3}, // Left chain
+        {f:0, t:4}, {f:4, t:5}, {f:5, t:6}, // Right chain
+        {f:1, t:7}, {f:1, t:8}, {f:2, t:9}, {f:2, t:10}, // Hydrogens left
+        {f:4, t:11}, {f:4, t:12}, {f:5, t:13}, {f:5, t:14} // Hydrogens right
+    ],
+    i: false,
+    z: 6
+},
         {id: 'mgcl2-box', a: [{c:0x32cd32,s:0.5,x:0,y:0,z:0},{c:0x32cd32,s:0.5,x:1.2,y:1.2,z:0},{c:0x32cd32,s:0.5,x:0,y:1.2,z:1.2},{c:0x32cd32,s:0.5,x:1.2,y:0,z:1.2},{c:0xf542b0,s:0.6,x:1.2,y:0,z:0},{c:0xf542b0,s:0.6,x:0,y:1.2,z:0},{c:0xf542b0,s:0.6,x:0,y:0,z:1.2},{c:0xf542b0,s:0.6,x:1.2,y:1.2,z:1.2}], b: [], i: false, z: 7}
     ];
 
